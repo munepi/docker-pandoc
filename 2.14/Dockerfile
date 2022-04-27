@@ -3,7 +3,7 @@
 ## linux/amd64 binary: pandoc-crossref v0.3.11.0 git commit 630d5a9 (HEAD) built with Pandoc v2.14, pandoc-types v1.22 and GHC 8.10.4
 
 ## build pandoc-crossref
-FROM --platform=linux/amd64 pandoc/ubuntu-crossref:2.14 AS amd64-pandoc-2.14-build
+FROM --platform=linux/amd64 pandoc/core:2.14-ubuntu AS amd64-pandoc-2.14-build
 
 FROM --platform=linux/arm64 munepi/tllangjapanese-base AS arm64-pandoc-2.14-build
 
@@ -28,7 +28,7 @@ RUN git clone https://github.com/lierdakil/pandoc-crossref.git && \
     mv -v ${HOME}/.local/bin/* /usr/local/bin/ && \
     cd ../ && rm -rf pandoc-crossref
 
-# # FROM --platform=linux/amd64 tllangjapanese-base AS amd64-pandoc-2.14-2.14
+# # FROM --platform=linux/amd64 tllangjapanese-base AS amd64-pandoc-2.14-build
 #
 # ENV ARCH		amd64
 # ENV PANDOC_VERSION	2.14
