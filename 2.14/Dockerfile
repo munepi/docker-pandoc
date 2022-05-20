@@ -5,28 +5,30 @@
 ## build pandoc-crossref
 FROM --platform=linux/amd64 pandoc/core:2.14-ubuntu AS amd64-pandoc-2.14-build
 
-FROM --platform=linux/arm64 munepi/tllangjapanese-base AS arm64-pandoc-2.14-build
+FROM --platform=linux/arm64 munepi/pandoc:2.14.20220425 AS arm64-pandoc-2.14-build
 
-ENV ARCH		arm64
-ENV PANDOC_VERSION	2.14
-ENV PANDOCXREF_VERSION	0.3.11.0
-
-RUN wget "https://github.com/jgm/pandoc/releases/download/${PANDOC_VERSION}/pandoc-${PANDOC_VERSION}-1-${ARCH}.deb" && \
-    dpkg -i *.deb
-
-## pandoc-crossref filter: Building from repo with stack
-RUN apt-get update && \
-        apt-get install -y --no-install-recommends \
-            haskell-stack llvm-9 zlib1g-dev libnuma-dev libtinfo5 && \
-        apt-get clean && \
-        rm -rf /var/lib/apt/lists/*
-
-RUN git clone https://github.com/lierdakil/pandoc-crossref.git && \
-    cd pandoc-crossref && \
-    git checkout v${PANDOCXREF_VERSION} && \
-    stack install && \
-    mv -v ${HOME}/.local/bin/* /usr/local/bin/ && \
-    cd ../ && rm -rf pandoc-crossref
+# FROM --platform=linux/arm64 munepi/tllangjapanese-base AS arm64-pandoc-2.14-build
+#
+# ENV ARCH		arm64
+# ENV PANDOC_VERSION	2.14
+# ENV PANDOCXREF_VERSION	0.3.11.0
+#
+# RUN wget "https://github.com/jgm/pandoc/releases/download/${PANDOC_VERSION}/pandoc-${PANDOC_VERSION}-1-${ARCH}.deb" && \
+#     dpkg -i *.deb
+#
+# ## pandoc-crossref filter: Building from repo with stack
+# RUN apt-get update && \
+#         apt-get install -y --no-install-recommends \
+#             haskell-stack llvm-9 zlib1g-dev libnuma-dev libtinfo5 && \
+#         apt-get clean && \
+#         rm -rf /var/lib/apt/lists/*
+#
+# RUN git clone https://github.com/lierdakil/pandoc-crossref.git && \
+#     cd pandoc-crossref && \
+#     git checkout v${PANDOCXREF_VERSION} && \
+#     stack install && \
+#     mv -v ${HOME}/.local/bin/* /usr/local/bin/ && \
+#     cd ../ && rm -rf pandoc-crossref
 
 # # FROM --platform=linux/amd64 tllangjapanese-base AS amd64-pandoc-2.14-build
 #
@@ -68,7 +70,8 @@ RUN apt-get update && \
         apt-get clean && \
         rm -rf /var/lib/apt/lists/*
 
-COPY --from=arm64-pandoc-2.14-build  /usr/bin/pandoc /usr/local/bin/pandoc
+COPY --from=arm64-pandoc-2.14-build  /usr/local/bin/pandoc /usr/local/bin/pandoc
+# COPY --from=arm64-pandoc-2.14-build  /usr/bin/pandoc /usr/local/bin/pandoc
 COPY --from=arm64-pandoc-2.14-build  /usr/local/bin/pandoc-crossref /usr/local/bin/pandoc-crossref
 
 WORKDIR /data
@@ -106,7 +109,8 @@ RUN apt-get update && \
         apt-get clean && \
         rm -rf /var/lib/apt/lists/*
 
-COPY --from=arm64-pandoc-2.14-build  /usr/bin/pandoc /usr/local/bin/pandoc
+COPY --from=arm64-pandoc-2.14-build  /usr/local/bin/pandoc /usr/local/bin/pandoc
+# COPY --from=arm64-pandoc-2.14-build  /usr/bin/pandoc /usr/local/bin/pandoc
 COPY --from=arm64-pandoc-2.14-build  /usr/local/bin/pandoc-crossref /usr/local/bin/pandoc-crossref
 
 WORKDIR /data
