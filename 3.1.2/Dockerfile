@@ -37,6 +37,11 @@ RUN wget "https://github.com/lierdakil/pandoc-crossref/releases/download/v${PAND
     tar xf pandoc-crossref-Linux.tar.xz -C /usr/local/bin
 
 
+## use prebuild image
+FROM --platform=linux/arm64 munepi/pandoc:3.1.2.20230602 AS arm64-pandoc-3.1.2-prebuild
+FROM --platform=linux/amd64 munepi/pandoc:3.1.2.20230602 AS amd64-pandoc-3.1.2-prebuild
+
+
 ## build main image
 FROM --platform=linux/arm64 munepi/tllangjapanese:2022 AS arm64-pandoc-3.1.2-tl22
 
@@ -68,6 +73,48 @@ RUN apt-get update && \
 
 COPY --from=amd64-pandoc-3.1.2-build  /usr/bin/pandoc          /usr/local/bin/pandoc
 COPY --from=amd64-pandoc-3.1.2-build  /usr/local/bin/pandoc-crossref /usr/local/bin/pandoc-crossref
+
+WORKDIR /data
+# ENTRYPOINT ["/bin/bash", "-c"]
+# CMD ["pandoc", "--help"]
+ENTRYPOINT [ "" ]
+CMD [ "/bin/bash" ]
+
+
+FROM --platform=linux/arm64 munepi/tllangjapanese:2019 AS arm64-pandoc-3.1.2-tl19
+
+## pandoc: install shared libraries
+RUN apt-get update && \
+        apt-get install -y --no-install-recommends \
+            libnuma1 && \
+        apt-get clean && \
+        rm -rf /var/lib/apt/lists/*
+
+# COPY --from=arm64-pandoc-3.1.2-build  /usr/bin/pandoc /usr/local/bin/pandoc
+# COPY --from=arm64-pandoc-3.1.2-build  /usr/local/bin/pandoc-crossref /usr/local/bin/pandoc-crossref
+COPY --from=arm64-pandoc-3.1.2-prebuild  /usr/local/bin/pandoc /usr/local/bin/pandoc
+COPY --from=arm64-pandoc-3.1.2-prebuild  /usr/local/bin/pandoc-crossref /usr/local/bin/pandoc-crossref
+
+WORKDIR /data
+# ENTRYPOINT ["/bin/bash", "-c"]
+# CMD ["pandoc", "--help"]
+ENTRYPOINT [ "" ]
+CMD [ "/bin/bash" ]
+
+
+FROM --platform=linux/amd64 munepi/tllangjapanese:2019 AS amd64-pandoc-3.1.2-tl19
+
+## pandoc: install shared libraries
+RUN apt-get update && \
+        apt-get install -y --no-install-recommends \
+            liblua5.4-0 && \
+        apt-get clean && \
+        rm -rf /var/lib/apt/lists/*
+
+# COPY --from=amd64-pandoc-3.1.2-build  /usr/bin/pandoc          /usr/local/bin/pandoc
+# COPY --from=amd64-pandoc-3.1.2-build  /usr/local/bin/pandoc-crossref /usr/local/bin/pandoc-crossref
+COPY --from=amd64-pandoc-3.1.2-prebuild  /usr/local/bin/pandoc          /usr/local/bin/pandoc
+COPY --from=amd64-pandoc-3.1.2-prebuild  /usr/local/bin/pandoc-crossref /usr/local/bin/pandoc-crossref
 
 WORKDIR /data
 # ENTRYPOINT ["/bin/bash", "-c"]
