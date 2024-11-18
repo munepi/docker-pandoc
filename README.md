@@ -1,11 +1,13 @@
 # munepi/pandoc
-Pandoc image with pandoc, pandoc-crossref, and a custom TeX Live installation
+[Pandoc](https://pandoc.org/) image with [pandoc-crossref](https://lierdakil.github.io/pandoc-crossref/) and custom TeX Live installation
 
 ## Supported tags and respective `Dockerfile` links
 
 ### Pandoc 3.5
  * [`latest` = `3.5` = `3.5.20241118` = `3.5-tl23` = `3.5-tl23.20241118`](https://github.com/munepi/docker-pandoc/blob/20241118/3.5/Dockerfile): Pandoc 3.5, pandoc-crossref, TeX Live 2023 frozen/TeX Live (`x86_64-linux`, `aarch64-linux`)
  * [`3.5-tl24` = `3.5-tl24.20241118`](https://github.com/munepi/docker-pandoc/blob/20241118/3.5/Dockerfile): Pandoc 3.5, pandoc-crossref, TeX Live 2024 current/TeX Live (`x86_64-linux`, `aarch64-linux`)
+
+We also have pushed the latest image to the [GitHub Container Registry](https://github.com/users/munepi/packages/container/package/pandoc).
 
 ### Pandoc 3.1.2
  * [`3.1.2` = `3.1.2.20230602` = `3.1.2-tl22` = `3.1.2-tl22.20230602`](https://github.com/munepi/docker-pandoc/blob/20230602/3.1.2/Dockerfile): Pandoc 3.1.2, pandoc-crossref, TeX Live 2022 frozen/TeX Live (`x86_64-linux`, `aarch64-linux`)
