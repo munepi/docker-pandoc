@@ -81,8 +81,90 @@ ENTRYPOINT [ "" ]
 CMD [ "/bin/bash" ]
 
 
-FROM --platform=linux/arm64 munepi/tllangjapanese:2019 AS arm64-pandoc-3.1.2-tl19
+## for TeX Live 2024 frozen
+FROM --platform=linux/arm64 munepi/tllangjapanese:2024 AS arm64-pandoc-3.1.2-tl24
+## pandoc: install shared libraries
+RUN apt-get update && \
+        apt-get install -y --no-install-recommends \
+            libnuma1 && \
+        apt-get clean && \
+        rm -rf /var/lib/apt/lists/*
 
+# COPY --from=arm64-pandoc-3.1.2-build  /usr/bin/pandoc /usr/local/bin/pandoc
+# COPY --from=arm64-pandoc-3.1.2-build  /usr/local/bin/pandoc-crossref /usr/local/bin/pandoc-crossref
+COPY --from=arm64-pandoc-3.1.2-prebuild  /usr/local/bin/pandoc /usr/local/bin/pandoc
+COPY --from=arm64-pandoc-3.1.2-prebuild  /usr/local/bin/pandoc-crossref /usr/local/bin/pandoc-crossref
+
+WORKDIR /data
+# ENTRYPOINT ["/bin/bash", "-c"]
+# CMD ["pandoc", "--help"]
+ENTRYPOINT [ "" ]
+CMD [ "/bin/bash" ]
+
+
+FROM --platform=linux/amd64 munepi/tllangjapanese:2024 AS amd64-pandoc-3.1.2-tl24
+## pandoc: install shared libraries
+RUN apt-get update && \
+        apt-get install -y --no-install-recommends \
+            liblua5.4-0 && \
+        apt-get clean && \
+        rm -rf /var/lib/apt/lists/*
+
+# COPY --from=amd64-pandoc-3.1.2-build  /usr/bin/pandoc          /usr/local/bin/pandoc
+# COPY --from=amd64-pandoc-3.1.2-build  /usr/local/bin/pandoc-crossref /usr/local/bin/pandoc-crossref
+COPY --from=amd64-pandoc-3.1.2-prebuild  /usr/local/bin/pandoc          /usr/local/bin/pandoc
+COPY --from=amd64-pandoc-3.1.2-prebuild  /usr/local/bin/pandoc-crossref /usr/local/bin/pandoc-crossref
+
+WORKDIR /data
+# ENTRYPOINT ["/bin/bash", "-c"]
+# CMD ["pandoc", "--help"]
+ENTRYPOINT [ "" ]
+CMD [ "/bin/bash" ]
+
+
+## for TeX Live 2023 frozen
+FROM --platform=linux/arm64 munepi/tllangjapanese:2023 AS arm64-pandoc-3.1.2-tl23
+## pandoc: install shared libraries
+RUN apt-get update && \
+        apt-get install -y --no-install-recommends \
+            libnuma1 && \
+        apt-get clean && \
+        rm -rf /var/lib/apt/lists/*
+
+# COPY --from=arm64-pandoc-3.1.2-build  /usr/bin/pandoc /usr/local/bin/pandoc
+# COPY --from=arm64-pandoc-3.1.2-build  /usr/local/bin/pandoc-crossref /usr/local/bin/pandoc-crossref
+COPY --from=arm64-pandoc-3.1.2-prebuild  /usr/local/bin/pandoc /usr/local/bin/pandoc
+COPY --from=arm64-pandoc-3.1.2-prebuild  /usr/local/bin/pandoc-crossref /usr/local/bin/pandoc-crossref
+
+WORKDIR /data
+# ENTRYPOINT ["/bin/bash", "-c"]
+# CMD ["pandoc", "--help"]
+ENTRYPOINT [ "" ]
+CMD [ "/bin/bash" ]
+
+
+FROM --platform=linux/amd64 munepi/tllangjapanese:2023 AS amd64-pandoc-3.1.2-tl23
+## pandoc: install shared libraries
+RUN apt-get update && \
+        apt-get install -y --no-install-recommends \
+            liblua5.4-0 && \
+        apt-get clean && \
+        rm -rf /var/lib/apt/lists/*
+
+# COPY --from=amd64-pandoc-3.1.2-build  /usr/bin/pandoc          /usr/local/bin/pandoc
+# COPY --from=amd64-pandoc-3.1.2-build  /usr/local/bin/pandoc-crossref /usr/local/bin/pandoc-crossref
+COPY --from=amd64-pandoc-3.1.2-prebuild  /usr/local/bin/pandoc          /usr/local/bin/pandoc
+COPY --from=amd64-pandoc-3.1.2-prebuild  /usr/local/bin/pandoc-crossref /usr/local/bin/pandoc-crossref
+
+WORKDIR /data
+# ENTRYPOINT ["/bin/bash", "-c"]
+# CMD ["pandoc", "--help"]
+ENTRYPOINT [ "" ]
+CMD [ "/bin/bash" ]
+
+
+## for TeX Live 2019 frozen
+FROM --platform=linux/arm64 munepi/tllangjapanese:2019 AS arm64-pandoc-3.1.2-tl19
 ## pandoc: install shared libraries
 RUN apt-get update && \
         apt-get install -y --no-install-recommends \
@@ -103,7 +185,6 @@ CMD [ "/bin/bash" ]
 
 
 FROM --platform=linux/amd64 munepi/tllangjapanese:2019 AS amd64-pandoc-3.1.2-tl19
-
 ## pandoc: install shared libraries
 RUN apt-get update && \
         apt-get install -y --no-install-recommends \
