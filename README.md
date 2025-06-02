@@ -3,8 +3,11 @@
 
 ## Supported tags and respective `Dockerfile` links
 
+### Pandoc 3.7.0.2
+ * [`latest` = `3.7.0.2` = `3.7.0.2.20250602` = `3.7.0.2-tl24` = `3.7.0.2-tl24.20250602`](https://github.com/munepi/docker-pandoc/blob/20250602/3.7.0.2/Dockerfile): Pandoc 3.7.0.2, pandoc-crossref, TeX Live 2024 frozen/TeX Live (`x86_64-linux`, `aarch64-linux`)
+
 ### Pandoc 3.6.4
- * [`latest` = `3.6.4` = `3.6.4.20250508` = `3.6.4-tl24` = `3.6.4-tl24.20250508`](https://github.com/munepi/docker-pandoc/blob/20250508/3.6.4/Dockerfile): Pandoc 3.6.4, pandoc-crossref, TeX Live 2024 frozen/TeX Live (`x86_64-linux`, `aarch64-linux`)
+ * [`3.6.4` = `3.6.4.20250508` = `3.6.4-tl24` = `3.6.4-tl24.20250508`](https://github.com/munepi/docker-pandoc/blob/20250508/3.6.4/Dockerfile): Pandoc 3.6.4, pandoc-crossref, TeX Live 2024 frozen/TeX Live (`x86_64-linux`, `aarch64-linux`)
  * [`3.6.4-tl23` = `3.6.4-tl23.20250508`](https://github.com/munepi/docker-pandoc/blob/20250508/3.6.4/Dockerfile): Pandoc 3.6.4, pandoc-crossref, TeX Live 2023 current/TeX Live (`x86_64-linux`, `aarch64-linux`)
 
 ### Pandoc 3.6
